@@ -160,6 +160,18 @@ uint16_t max_display_update_time = 0;
     extern bool powersupply_on;
   #endif
 
+
+  //peyson 0302 sdcard_pause
+//float  xpause_rememberd;
+//float  ypause_rememberd;
+float  zpause_rememberd;
+//static float manual_feedrate[] = MANUAL_FEEDRATE;
+inline void manual_move_to_current(AxisEnum axis
+    #if E_MANUAL > 1
+      , int8_t eindex=-1
+    #endif
+  );
+
   ////////////////////////////////////////////
   ///////////////// Menu Tree ////////////////
   ////////////////////////////////////////////
@@ -772,9 +784,39 @@ void kill_screen(const char* lcd_msg) {
   }
 
   #if ENABLED(SDSUPPORT)
+#if 0
+ void lcd_position_remember()
+{
+  
+//  xpause_rememberd=current_position[X_AXIS];
+//  ypause_rememberd=current_position[Y_AXIS];
+  zpause_rememberd=current_position[Z_AXIS];
+  
+  
+//  current_position[X_AXIS]=0;
+//  current_position[Y_AXIS]=200;
+  current_position[Z_AXIS]+=20;
 
+//  manual_move_to_current(Z_AXIS);
+   line_to_current_z();
+  
+ // plan_buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate[X_AXIS]/60, active_extruder);
+
+}
+static void lcd_position_restore()
+{
+//  current_position[X_AXIS]=xpause_rememberd;
+//  current_position[Y_AXIS]=ypause_rememberd;
+  current_position[Z_AXIS]=zpause_rememberd;
+// prepare_move_to_destination();
+  line_to_current_z();
+//   manual_move_to_current(Z_AXIS);
+ // plan_buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate[X_AXIS]/60, active_extruder);
+}
+#endif
     void lcd_sdcard_pause() {
       card.pauseSDPrint();
+//      lcd_position_remember();
       print_job_timer.pause();
       #if ENABLED(PARK_HEAD_ON_PAUSE)
         enqueue_and_echo_commands_P(PSTR("M125"));
@@ -786,8 +828,10 @@ void kill_screen(const char* lcd_msg) {
       #if ENABLED(PARK_HEAD_ON_PAUSE)
         enqueue_and_echo_commands_P(PSTR("M24"));
       #else
+ //       lcd_position_restore();
         card.startFileprint();
         print_job_timer.start();
+ 
       #endif
       lcd_reset_status();
     }
@@ -1231,7 +1275,7 @@ void kill_screen(const char* lcd_msg) {
   #if ENABLED(ADVANCED_PAUSE_FEATURE)
 
     void lcd_enqueue_filament_change() {
-
+          thermalManager.target_temperature[0] = 240;       //2018-12-2
       #if ENABLED(PREVENT_COLD_EXTRUSION)
         if (!DEBUGGING(DRYRUN) && !thermalManager.allow_cold_extrude &&
             thermalManager.degTargetHotend(active_extruder) < thermalManager.extrude_min_temp) {
@@ -2579,7 +2623,8 @@ void kill_screen(const char* lcd_msg) {
     // Change filament
     //
     #if ENABLED(ADVANCED_PAUSE_FEATURE)
-      if (!thermalManager.tooColdToExtrude(active_extruder) && !IS_SD_FILE_OPEN)
+//      if (!thermalManager.tooColdToExtrude(active_extruder) && !IS_SD_FILE_OPEN)    //2018-12-2
+      if ( !IS_SD_FILE_OPEN)
         MENU_ITEM(function, MSG_FILAMENTCHANGE, lcd_enqueue_filament_change);
     #endif
 

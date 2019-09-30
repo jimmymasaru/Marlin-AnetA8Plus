@@ -6478,8 +6478,8 @@ inline void gcode_M17() {
     RUNPLAN(fr);
     stepper.synchronize();
   }
-
-  static bool pause_print(const float &retract, const point_t &park_point, const float &unload_length = 0,
+// const point_t &park_point change  point_t &park_point  2018-8-29
+  static bool pause_print(const float &retract,  point_t &park_point, const float &unload_length = 0,
                           const int8_t max_beep_count = 0, const bool show_lcd = false
   ) {
     if (move_away_flag) return false; // already paused
@@ -6529,6 +6529,8 @@ inline void gcode_M17() {
       do_pause_e_move(retract, PAUSE_PARK_RETRACT_FEEDRATE);
 
     // Park the nozzle by moving up by z_lift and then moving to (x_pos, y_pos)
+    park_point.x = current_position[0];   //2018-8-29
+    park_point.y = current_position[1];   //2018-8-29
     Nozzle::park(2, park_point);
 
     if (unload_length != 0) {
@@ -10021,8 +10023,8 @@ inline void gcode_M502() {
       if (axis_unhomed_error()) home_all_axes();
     #endif
 
-    // Initial retract before move to filament change position
-    const float retract = parser.seen('E') ? parser.value_axis_units(E_AXIS) : 0
+    // Initial retract before move to filament change position   2018-8-30 remove const
+     float retract = parser.seen('E') ? parser.value_axis_units(E_AXIS) : 0
       #ifdef PAUSE_PARK_RETRACT_LENGTH
         - (PAUSE_PARK_RETRACT_LENGTH)
       #endif
@@ -10067,6 +10069,9 @@ inline void gcode_M502() {
     );
 
     const bool job_running = print_job_timer.isRunning();
+
+     if(!IS_SD_FILE_OPEN)
+        retract = - PAUSE_PARK_RETRACT_LENGTH_NOOPEN;
 
     if (pause_print(retract, park_point, unload_length, beep_count, true)) {
       wait_for_filament_reload(beep_count);

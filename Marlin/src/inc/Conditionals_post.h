@@ -977,7 +977,10 @@
   #define X_SENSORLESS  (AXIS_HAS_STALLGUARD(X)  && defined(X_STALL_SENSITIVITY))
   #define X2_SENSORLESS (AXIS_HAS_STALLGUARD(X2) && defined(X2_STALL_SENSITIVITY))
   #define Y_SENSORLESS  (AXIS_HAS_STALLGUARD(Y)  && defined(Y_STALL_SENSITIVITY))
+  #define Y2_SENSORLESS (AXIS_HAS_STALLGUARD(Y2) && defined(Y2_STALL_SENSITIVITY))
   #define Z_SENSORLESS  (AXIS_HAS_STALLGUARD(Z)  && defined(Z_STALL_SENSITIVITY))
+  #define Z2_SENSORLESS (AXIS_HAS_STALLGUARD(Z2) && defined(Z2_STALL_SENSITIVITY))
+  #define Z3_SENSORLESS (AXIS_HAS_STALLGUARD(Z3) && defined(Z3_STALL_SENSITIVITY))
   #if ENABLED(SPI_ENDSTOPS)
     #define X_SPI_SENSORLESS X_SENSORLESS
     #define Y_SPI_SENSORLESS Y_SENSORLESS
@@ -1329,6 +1332,17 @@
  */
 #if ENABLED(FAST_PWM_FAN) && !defined(FAST_PWM_FAN_FREQUENCY)
   #define FAST_PWM_FAN_FREQUENCY ((F_CPU) / (2 * 255 * 1)) // Fan frequency default
+#endif
+
+/**
+ * MIN/MAX case light PWM scaling
+ */
+#if HAS_CASE_LIGHT
+  #ifndef CASE_LIGHT_MAX_PWM
+    #define CASE_LIGHT_MAX_PWM 255
+  #elif !WITHIN(CASE_LIGHT_MAX_PWM, 1, 255)
+    #error "CASE_LIGHT_MAX_PWM must be a value from 1 to 255."
+  #endif
 #endif
 
 /**

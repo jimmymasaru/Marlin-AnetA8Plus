@@ -56,7 +56,14 @@ enum PauseMessage : char {
   PAUSE_MESSAGE_RESUME,
   PAUSE_MESSAGE_STATUS,
   PAUSE_MESSAGE_HEAT,
-  PAUSE_MESSAGE_HEATING
+  PAUSE_MESSAGE_HEATING,
+  PAUSE_MESSAGE_LOADING_OPTION
+};
+
+enum LoadingMenuResponse : char {
+  LOADING_RESPONSE_WAIT_FOR,
+  LOADING_RESPONSE_REWIND,
+  LOADING_RESPONSE_CONTINUE
 };
 
 enum PauseMenuResponse : char {
@@ -67,6 +74,7 @@ enum PauseMenuResponse : char {
 
 extern PauseMode pause_mode;
 extern PauseMenuResponse pause_menu_response;
+extern LoadingMenuResponse loading_menu_response;
 
 extern fil_change_settings_t fc_settings[EXTRUDERS];
 

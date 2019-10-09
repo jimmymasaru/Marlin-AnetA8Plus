@@ -253,3 +253,5 @@
 #define MSG_PRINT_PAUSED                    _UxGT("プリントガイチジテイシサレマシタ")
 #define MSG_PRINTING                        _UxGT("プリントチュウ...")
 #define MSG_PRINT_ABORTED                   _UxGT("プリントガチュウシサレマシタ")
+#define MSG_FILAMENT_CHANGE_OPTION_REWIND   _UxGT("マキモドシ")
+#define MSG_FILAMENT_CHANGE_OPTION_CONTINUE _UxGT("ツヅキ")

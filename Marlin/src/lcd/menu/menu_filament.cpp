@@ -369,6 +369,24 @@ void menu_pause_option() {
   END_MENU();
 }
 
+void lcd_loading_rewind() {
+  loading_menu_response = LOADING_RESPONSE_REWIND;
+}
+
+void lcd_loading_continue() {
+  loading_menu_response = LOADING_RESPONSE_CONTINUE;
+}
+
+void menu_loading_option() {
+  START_MENU();
+  #if LCD_HEIGHT > 2
+    STATIC_ITEM(MSG_FILAMENT_CHANGE_LOADING_OPTION_HEADER);
+  #endif
+  ACTION_ITEM(MSG_FILAMENT_CHANGE_OPTION_CONTINUE, lcd_loading_continue);
+  ACTION_ITEM(MSG_FILAMENT_CHANGE_OPTION_REWIND, lcd_loading_rewind);
+  END_MENU();
+}
+
 //
 // ADVANCED_PAUSE_FEATURE message screens
 //
@@ -519,6 +537,9 @@ FORCE_INLINE screenFunc_t ap_message_screen(const PauseMessage message) {
     case PAUSE_MESSAGE_HEATING:  return lcd_pause_heating_message;
     case PAUSE_MESSAGE_OPTION:   pause_menu_response = PAUSE_RESPONSE_WAIT_FOR;
                                  return menu_pause_option;
+    case PAUSE_MESSAGE_LOADING_OPTION: 
+                                 loading_menu_response = LOADING_RESPONSE_WAIT_FOR;
+                                 return menu_loading_option;
     case PAUSE_MESSAGE_STATUS:
     default: break;
   }

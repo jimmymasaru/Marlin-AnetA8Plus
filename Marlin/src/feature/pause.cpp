@@ -70,6 +70,8 @@ PauseMode pause_mode = PAUSE_MODE_PAUSE_PRINT;
 
 PauseMenuResponse pause_menu_response;
 
+LoadingMenuResponse loading_menu_response;
+
 fil_change_settings_t fc_settings[EXTRUDERS];
 
 #if ENABLED(SDSUPPORT)
@@ -144,7 +146,7 @@ void do_pause_e_move(const float &length, const feedRate_t &fr_mm_s) {
  * Returns 'true' if load was completed, 'false' for abort
  */
 bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_length/*=0*/, const float &purge_length/*=0*/, const int8_t max_beep_count/*=0*/,
-                   const bool show_lcd/*=false*/, const bool pause_for_user/*=false*/,
+                   const bool show_lcd/*=false*/, bool pause_for_user/*=false*/,
                    const PauseMode mode/*=PAUSE_MODE_PAUSE_PRINT*/
                    DXC_ARGS
 ) {
@@ -157,6 +159,14 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
       if (show_lcd) lcd_pause_show_message(PAUSE_MESSAGE_STATUS, mode);
     #endif
     return false;
+  };
+
+  do {
+  // rewind if requested
+  if (loading_menu_response == LOADING_RESPONSE_REWIND) {
+      float rewind_length = slow_load_length + fast_load_length;
+      do_pause_e_move(-rewind_length, FILAMENT_CHANGE_UNLOAD_FEEDRATE);
+      pause_for_user = true; // always pause for user to prepare
   }
 
   if (pause_for_user) {
@@ -225,6 +235,21 @@ bool load_filament(const float &slow_load_length/*=0*/, const float &fast_load_l
       planner.settings.retract_acceleration = saved_acceleration;
     #endif
   }
+
+  // Ask user if the loading was successful
+  #if HAS_LCD_MENU
+    if (show_lcd) {
+      KEEPALIVE_STATE(PAUSED_FOR_USER);
+      wait_for_user = false;
+      lcd_pause_show_message(PAUSE_MESSAGE_LOADING_OPTION);
+      while (loading_menu_response == LOADING_RESPONSE_WAIT_FOR) idle(true);
+    }
+  #endif
+  } while (false
+      #if HAS_LCD_MENU
+        || (show_lcd && loading_menu_response == LOADING_RESPONSE_REWIND)
+      #endif
+  );
 
   #if ENABLED(DUAL_X_CARRIAGE)      // Tie the two extruders movement back together.
     active_extruder = saved_ext;

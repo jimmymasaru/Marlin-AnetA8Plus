@@ -71,7 +71,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(Jimmy Page based on Martin Zeman - Zemistr, Anet A8 Plus)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "Jimmy Page" // Who made the changes.
 
 /**
  * *** VENDORS PLEASE READ ***
@@ -1082,7 +1082,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE // Jimmy 20191003
 #define Y_MAX_POS Y_BED_SIZE // Jimmy 20191003
-#define Z_MAX_POS 370
+#define Z_MAX_POS 350 // Jimmy 20191012
 
 /**
  * Software Endstops
@@ -2234,4 +2234,4 @@
 // Jimmy 20191003 - changed from meo_udon's configurations at https://www.thingiverse.com/groups/anet-a8-prusa-i3/forums/general/topic:35760 
 #define ST7920_DELAY_1 DELAY_NS(0)
 #define ST7920_DELAY_2 DELAY_NS(0)
-#define ST7920_DELAY_3 DELAY_NS(500)
+#define ST7920_DELAY_3 DELAY_NS(400)

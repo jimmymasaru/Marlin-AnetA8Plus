@@ -942,7 +942,7 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#define NOZZLE_TO_PROBE_OFFSET { -17, -45, -0.25 }
+#define NOZZLE_TO_PROBE_OFFSET { -17, -45, 0 }
 
 // Certain types of probes need to stay away from edges
 #define MIN_PROBE_EDGE 20
@@ -1078,7 +1078,7 @@
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS -20 // Jimmy 20191003
-#define Y_MIN_POS -5 // Jimmy 20191003
+#define Y_MIN_POS -3 // Jimmy 20191012
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE // Jimmy 20191003
 #define Y_MAX_POS Y_BED_SIZE // Jimmy 20191003
@@ -1098,7 +1098,7 @@
 #if ENABLED(MIN_SOFTWARE_ENDSTOPS)
   #define MIN_SOFTWARE_ENDSTOP_X
   #define MIN_SOFTWARE_ENDSTOP_Y
-  // #define MIN_SOFTWARE_ENDSTOP_Z // Jimmy 20191012 Disabled to allow changing below 0
+  #define MIN_SOFTWARE_ENDSTOP_Z
 #endif
 
 // Max software endstops constrain movement within maximum coordinate bounds

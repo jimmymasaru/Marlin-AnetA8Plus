@@ -2499,14 +2499,17 @@
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
   //#define USER_SCRIPT_RETURN  // Return to status screen after a script
 
-  #define USER_DESC_1 "Z to 330mm"
-  #define USER_GCODE_1 "G0 Z330\nM18"
+  #define USER_DESC_1 "Home & Z0"
+  #define USER_GCODE_1 "G28\nG0 Z0"
 
-  #define USER_DESC_2 "Z to 20mm"
-  #define USER_GCODE_2 "G0 Z20\nM18"
+  #define USER_DESC_2 "Z to 330mm"
+  #define USER_GCODE_2 "G0 Z330\nM18"
 
-  #define USER_DESC_3 "Home & Info"
-  #define USER_GCODE_5 "G28\nM503"
+  // #define USER_DESC_3 "Z to 20mm"
+  // #define USER_GCODE_3 "G0 Z20\nM18"
+
+  // #define USER_DESC_4 "Home & Info"
+  // #define USER_GCODE_4 "G28\nM503"
 
   //#define USER_DESC_3 "Preheat for " PREHEAT_2_LABEL
   //#define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)

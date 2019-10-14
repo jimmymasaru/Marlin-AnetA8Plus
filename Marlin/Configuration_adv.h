@@ -2500,7 +2500,7 @@
   //#define USER_SCRIPT_RETURN  // Return to status screen after a script
 
   #define USER_DESC_1 "Home & Z0"
-  #define USER_GCODE_1 "G28\nG0 Z0"
+  #define USER_GCODE_1 "G28\nM300 S440 P400\nM300 S660 P500\nM300 S880 P600\nM0 S2\nG0 Z0"
 
   #define USER_DESC_2 "Z to 330mm"
   #define USER_GCODE_2 "G0 Z330\nM18"

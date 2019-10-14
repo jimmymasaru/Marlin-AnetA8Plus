@@ -469,9 +469,9 @@
   //#define SLOW_PWM_HEATERS      // PWM with very low frequency (roughly 0.125Hz=8s) and minimum state time of approximately 1s useful for heaters driven by a relay
   //#define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
                                   // Set/get with gcode: M301 E[extruder number, 0-2]
-  #define PID_FUNCTIONAL_RANGE 15 // If the temperature difference between the target temperature and the actual temperature
+  #define PID_FUNCTIONAL_RANGE 10 // If the temperature difference between the target temperature and the actual temperature
                                   // is more than PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
-
+                                  // Jimmy 20191014 Copied from official 1.1.8 configuration
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
@@ -491,9 +491,9 @@
 
   // ANET A8 Standard Extruder at 210 Degree Celsius and 100% Fan
   //(measured after M106 S255 with M303 E0 S210 C8)
-  #define  DEFAULT_Kp 49.19
-  #define  DEFAULT_Ki 6.33
-  #define  DEFAULT_Kd 95.60
+  #define  DEFAULT_Kp 22.2 // Jimmy 20191014 Copied from official 1.1.8 configurations
+  #define  DEFAULT_Ki 1.08 // Jimmy 20191014 Copied from official 1.1.8 configurations
+  #define  DEFAULT_Kd 114 // Jimmy 20191014 Copied from official 1.1.8 configurations
 #endif // PIDTEMP
 
 //===========================================================================
@@ -942,7 +942,7 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#define NOZZLE_TO_PROBE_OFFSET { -17, -45, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { -18, -49, -1.05 }
 
 // Certain types of probes need to stay away from edges
 #define MIN_PROBE_EDGE 20
@@ -1339,8 +1339,8 @@
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_X_POINT 50 // ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28). // Jimmy 20191014 Changed
+  #define Z_SAFE_HOMING_Y_POINT 50 // ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28). // Jimmy 20191014 Changed
 #endif
 
 // Homing speeds (mm/m)
@@ -1459,7 +1459,7 @@
 // Preheat Constants
 #define PREHEAT_1_LABEL       "PLA"
 #define PREHEAT_1_TEMP_HOTEND 205
-#define PREHEAT_1_TEMP_BED     70
+#define PREHEAT_1_TEMP_BED     75
 #define PREHEAT_1_FAN_SPEED   128 // Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "PET-G"

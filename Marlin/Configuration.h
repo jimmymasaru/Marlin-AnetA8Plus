@@ -734,7 +734,11 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 200, 200, 10, 25 } // Jimmy 20191010 Changed
+#define DEFAULT_MAX_FEEDRATE_X 200
+#define DEFAULT_MAX_FEEDRATE_Y 200
+#define DEFAULT_MAX_FEEDRATE_Z 10
+#define DEFAULT_MAX_FEEDRATE_E 25
+#define DEFAULT_MAX_FEEDRATE          { DEFAULT_MAX_FEEDRATE_X, DEFAULT_MAX_FEEDRATE_Y, DEFAULT_MAX_FEEDRATE_Z, DEFAULT_MAX_FEEDRATE_E } // Jimmy 20191010 Changed
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -942,10 +946,10 @@
  *
  * Specify a Probe position as { X, Y, Z }
  */
-#define NOZZLE_TO_PROBE_OFFSET { -18, -49, -1.05 }
+#define NOZZLE_TO_PROBE_OFFSET { -18, -49, -1.85 }
 
 // Certain types of probes need to stay away from edges
-#define MIN_PROBE_EDGE 20
+#define MIN_PROBE_EDGE 40
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000
@@ -1344,8 +1348,8 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (100*60)
-#define HOMING_FEEDRATE_Z  (10*60) // Jimmy 20191003 Changed
+#define HOMING_FEEDRATE_XY (DEFAULT_MAX_FEEDRATE_X / 2 * 60) // Jimmy 20191019 Changed
+#define HOMING_FEEDRATE_Z  (DEFAULT_MAX_FEEDRATE_Z / 2 * 60) // Jimmy 20191019 Changed
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1482,9 +1486,9 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z_raise }
-  #define NOZZLE_PARK_POINT { (X_MAX_POS - 20), (Y_MIN_POS + 20 ), 150 } // Jimmy 20191003 Changed
-  #define NOZZLE_PARK_XY_FEEDRATE 100   // (mm/s) X and Y axes feedrate (also used for delta Z axis) // Jimmy 20191003 Changed
-  #define NOZZLE_PARK_Z_FEEDRATE 10     // (mm/s) Z axis feedrate (not used for delta printers) // Jimmy 20191003 Changed
+  #define NOZZLE_PARK_POINT { Z_SAFE_HOMING_X_POINT, Z_SAFE_HOMING_Y_POINT, 150 } // Jimmy 20191003 Changed
+  #define NOZZLE_PARK_XY_FEEDRATE DEFAULT_MAX_FEEDRATE_X / 2   // (mm/s) X and Y axes feedrate (also used for delta Z axis) // Jimmy 20191003 Changed
+  #define NOZZLE_PARK_Z_FEEDRATE DEFAULT_MAX_FEEDRATE_Z / 2     // (mm/s) Z axis feedrate (not used for delta printers) // Jimmy 20191003 Changed
 #endif
 
 /**

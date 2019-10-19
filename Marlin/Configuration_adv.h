@@ -2503,10 +2503,10 @@
   #define USER_GCODE_1 "G0 F6000 X150 Y75\nG0 F600 Z0"
 
   #define USER_DESC_2 "Slow Unload 5mm"
-  #define USER_GCODE_2 "G91\nG1 E-5 F360"
+  #define USER_GCODE_2 "G91\nG1 E-5 F360\nG90"
 
   #define USER_DESC_3 "Fast Load 5mm"
-  #define USER_GCODE_3 "G91\nG1 E5 F600"
+  #define USER_GCODE_3 "G91\nG1 E5 F600\nG90"
 
   //#define USER_DESC_3 "Preheat for " PREHEAT_2_LABEL
   //#define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)

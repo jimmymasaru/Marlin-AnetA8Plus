@@ -362,6 +362,12 @@ void menu_motion() {
     if (!g29_in_progress)
       SUBMENU(MSG_BED_LEVELING, menu_bed_leveling);
 
+  #elif HAS_LEVELING && ENABLED(SLIM_LCD_MENUS)
+
+    #if DISABLED(PROBE_MANUALLY)
+      GCODES_ITEM(MSG_LEVEL_BED, PSTR("G28\nG29"));
+    #endif
+    
   #elif HAS_LEVELING && DISABLED(SLIM_LCD_MENUS)
 
     #if DISABLED(PROBE_MANUALLY)

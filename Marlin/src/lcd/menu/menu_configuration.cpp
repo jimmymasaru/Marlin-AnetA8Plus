@@ -344,7 +344,7 @@ void menu_configuration() {
     SUBMENU(MSG_DEBUG_MENU, menu_debug);
   #endif
 
-  SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
+  // SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
 
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     SUBMENU(MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
@@ -373,7 +373,7 @@ void menu_configuration() {
     #endif
 
     #if ENABLED(BLTOUCH)
-      SUBMENU(MSG_BLTOUCH, menu_bltouch);
+      // SUBMENU(MSG_BLTOUCH, menu_bltouch);
     #endif
 
     #if ENABLED(TOUCH_MI_PROBE)
@@ -417,7 +417,7 @@ void menu_configuration() {
     if (!busy) ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);
   #endif
 
-  if (!busy) ACTION_ITEM(MSG_RESTORE_DEFAULTS, ui.reset_settings);
+  // if (!busy) ACTION_ITEM(MSG_RESTORE_DEFAULTS, ui.reset_settings);
 
   END_MENU();
 }
